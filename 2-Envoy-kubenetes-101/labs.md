@@ -86,6 +86,7 @@ containers:
 
 
 To run deployment and service of server with envoy as sidecar.
+
 ```command
 kubectl apply -f app-deployment-with-envoy.yaml
 ```
