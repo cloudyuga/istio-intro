@@ -1,8 +1,8 @@
 IMAGE = "envoy-course-101"
 TAG = "v0.1"
 CONTAINER = "envoy-course-101-container"
-#APP_PORT = 9877
-APP_PORT = 9876
+APP_PORT = 9877
+# APP_PORT = 9876
 HOST_PORT = 9001
 
 
