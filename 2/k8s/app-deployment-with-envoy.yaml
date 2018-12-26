@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: flask-app
+  name: k8s-envoy-101
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8s-envoy-101
+  template:
+    metadata:
+      name: k8s-envoy-101
+      labels:
+        app: k8s-envoy-101
+    spec:
+      volumes:
+        - name: envoy-config
+          configMap:
+            name: envoy-config
+      containers:
+        - name: http-echo
+          args: ["-listen", ":9090", "-text", "Hello from main app"]
+          image: hashicorp/http-echo:0.2.3
+        - name: envoy-sidecar
+          image: envoyproxy/envoy-alpine:v1.8.0
+          command:
+            - "/usr/local/bin/envoy"
+          args:
+            - "--config-path /etc/envoy/envoy.yaml"
+            - "--mode serve"
+            - "--service-cluster flask-app"
+            - --v2-config-only
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+              name: app
+            - containerPort: 8001
+              protocol: TCP
+              name: metrics
+          volumeMounts:
+            - name: envoy-config
+              mountPath: /etc/envoy
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: k8s-envoy-101
+  labels:
+    app: k8s-envoy-101
+spec:
+  type: NodePort
+  selector:
+    app: k8s-envoy-101
+  ports:
+  - protocol: TCP
+    name: app
+    port: 8080
+    nodePort: 31009
+    targetPort: 8080
+  - protocol: TCP
+    name: metrics
+    port: 8001
+    targetPort: 8001
+    nodePort: 31010

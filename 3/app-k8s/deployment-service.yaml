@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: envoy-101-flask-app
+  name: envoy-101-flask-app
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: envoy-101-flask-app
+  template:
+    metadata:
+      labels:
+        app: envoy-101-flask-app
+      name: envoy-101-flask-app
+    spec:
+      volumes:
+        - name: envoy
+          configMap:
+            name: envoy-101-flask-app
+      containers:
+        - name: envoy-101-flask-app
+          image: envoy-101-flask-app:v0.1
+          ports:
+            - containerPort: 9090
+        - name: envoy
+          image: envoyproxy/envoy-alpine:v1.8.0
+          command:
+            - "/usr/local/bin/envoy"
+          args:
+            - "--config-path /etc/envoy/envoy.yaml"
+            - "--mode serve"
+            - --v2-config-only
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+              name: app
+            - containerPort: 8001
+              protocol: TCP
+              name: metrics
+          volumeMounts:
+            - name: envoy
+              mountPath: /etc/envoy
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: envoy-101-flask-app
+  labels:
+    app: envoy-101-flask-app
+spec:
+  selector:
+    app: envoy-101-flask-app
+  ports:
+  - protocol: TCP
+    name: app
+    port: 8080
+    targetPort: 8080
+  - protocol: TCP
+    name: metrics
+    port: 8001
+    targetPort: 8001
