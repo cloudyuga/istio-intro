@@ -1,6 +1,4 @@
-#### 
-
-TOC
+## TOC
 
 * Introduction and running envoy in docker container.
 * Envoy as sidecar proxy in k8s.

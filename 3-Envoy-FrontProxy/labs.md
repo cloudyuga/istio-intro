@@ -7,9 +7,9 @@ In this we will have
 All the traffic will go by front-proxy, which is ruuning envoy and depending on url it will be routed to flask app sidecar, the sidecar envoy then will route traffic to flask app.
 
 
-Go to 3rd folder.
+Go to 3-Envoy-FrontProxy folder.
 ```command
-cd 3
+cd 3-Envoy-FrontProxy
 ```
 
 ### Let's first create flask application
@@ -18,7 +18,7 @@ cd 3
 ```command
 cd app
 make build
-    ```
+```
 
 * Let's run the app in kubernetes.
 
