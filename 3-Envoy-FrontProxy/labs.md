@@ -23,14 +23,14 @@ make build
 * Let's run the app in kubernetes.
 
 ```command
-kubectl apply -f app-k8s/configmap.yaml
-kubectl apply -f app-k8s/deployment-service.yaml
+kubectl apply -f configs/app-k8s/configmap.yaml
+kubectl apply -f configs/app-k8s/deployment-service.yaml
 ```
 
 
 * Let's check if all is running fine or not
 
-```
+```command
 kubectl get pods -l  app=envoy-101-front-proxy
 ```
 
@@ -42,8 +42,8 @@ You can access anything right now, because it's not exposed by service endpoint.
 * Let's run front-proxy now.
 
 ```command
-kubectl apply -f  front-proxy/configmap.yaml
-kubectl apply -f front-proxy/deployment.yaml
+kubectl apply -f configs/front-proxy/configmap.yaml
+kubectl apply -f configs/front-proxy/deployment.yaml
 ```
 
 Above config we can see in this section
@@ -69,7 +69,7 @@ virtual_hosts:
 
 If we make request with `/flask-app/` it routes to cluster `flask_app`
 
-```
+```yaml
 - name: flask_app
     type: STRICT_DNS
     connect_timeout: 10s
@@ -87,6 +87,6 @@ curl -I $(minikube ip):31012/flask_app
 ```
 
 ```command
-curl $(minikube ip):31012/flask_app/e2
-curl -I $(minikube ip):31012/flask_app/e2
+curl node-ip:31012/flask_app/e2
+curl -I node-ip:31012/flask_app/e2
 ```

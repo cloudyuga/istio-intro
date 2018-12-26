@@ -8,9 +8,17 @@ admin:
   address:
     socket_address: { address: 0.0.0.0, port_value: 9876 }
 ```
-Build the docker image: `docker build -t envoy-course-101:v.0.1 -f Dockerfile-envoy-0`
 
-Run the docker image: `docker run -p 8888:9876 --name envoy-course-101 envoy-course-101:v.0.1`
+Build the docker image: 
+
+```command
+docker build -t envoy-course-101:v.0.1 -f Dockerfile-envoy-0
+```
+
+Run the docker image: 
+```command
+docker run -p 8888:9876 --name envoy-course-101 envoy-course-101:v.0.1
+```
 
 
 ## Envoy config with listeners
@@ -51,10 +59,23 @@ static_resources:
     tls_context: { sni: www.google.com }
 ```
 
-* Build the docker image: `docker build -t envoy-course-101:v.0.2 -f Dockerfile-envoy-0`
+* Build the docker image: 
 
-* Run the docker image: `docker run -p 8888:9876 --name envoy-course-101 envoy-course-101:v.0.2`
+```command
+docker build -t envoy-course-101:v.0.2 -f Dockerfile-envoy-0
+```
+
+* Run the docker image: 
+```command
+docker run -p 8888:9876 --name envoy-course-101 envoy-course-101:v.0.2
+```
 
 * Check if it's working fine: 
-    * Check headers only : `curl -I localhost:9001`
-    * Or while running on local system go to browser and try : `localhost:9001`
+    * Check headers only : 
+    ```command
+    curl -I localhost:9001
+    ```
+    * Or while running on local system go to browser and try : 
+    ```command
+    localhost:9001
+    ```

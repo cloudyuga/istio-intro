@@ -118,5 +118,5 @@ spec:
 To check if working fine
 
 ```command
-curl -I $(minikube ip):31009
+curl -I node-ip:31009
 ```
