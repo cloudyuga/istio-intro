@@ -32,7 +32,7 @@ spec:
             - "--config-path /etc/envoy/envoy.yaml"
             - "--mode serve"
             - "--service-cluster flask-app"
-            - --v2-config-only
+            - "--v2-config-only"
           ports:
             - containerPort: 8080
               protocol: TCP

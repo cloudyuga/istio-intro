@@ -11,7 +11,7 @@ kubectl apply -f envoy-configmap.yaml
 To run deployment and service of server with envoy as sidecar.
 
 ```command
-kubectl apply -f pp-deployment-with-envoy.yaml
+kubectl apply -f app-deployment-with-envoy.yaml
 ```
 
 To check if working fine
