@@ -22,7 +22,7 @@ spec:
             name: envoy-101-flask-app
       containers:
         - name: envoy-101-flask-app
-          image: envoy-101-flask-app:v0.1
+          image: teamcloudyuga/envoy-101-flask-app:v0.1
           ports:
             - containerPort: 9090
         - name: envoy
