@@ -1,7 +1,7 @@
 # Envoy Introduction
 Envoy is an L7 proxy and communication bus designed for complex microservice architectures. Envoy proxy is designed to run alongside of the every application. All these Envoys deployed alongside with applications create transperent service mesh. Alll communications of these applications take place through this service mesh.  Envoy can easily run with any application independent of the language in which applications have written. So in microservice architecture, Envoy motivates to use multiple application frameworks and languages as Envoy transparently bridges the gap.  Envoy can be deployed and upgraded quickly across an entire infrastructure transparently.
 
-## Sample envoy config
+## Sample envoy configuration.
 
 - Take a look at `envoy-0.yaml`, which contains simple envoy configuration.
 
@@ -28,7 +28,7 @@ docker run -p 8888:9876 --name envoy-course-101 envoy-course-101:v.0.1
 
 - Check if it's working fine: go to browser and try `http://localhost:8888/` you will admin pannel of envoy is coming.
 
-## Envoy config with listeners
+## Envoy configurations with listeners
 
 - Take a look at another envoy configuration. In which we have added the listener port.
 
@@ -67,6 +67,7 @@ static_resources:
     hosts: [{ socket_address: { address: google.com, port_value: 443 }}]
     tls_context: { sni: www.google.com }
 ```
+In this configuration we have added listener `listener_0` such that if any request comes to `0.0.0.0:9877` then it will be forwarded to `www.google.com`.
 
 - Build the docker image with above envoy configurations.
 
@@ -82,7 +83,7 @@ docker run -p 8888:9876 -p 8899:9877 --name envoy-course-101 envoy-course-101:v.
 
 - Check if it's working fine: go to browser and try `http://localhost:8888/` you will admin pannel of envoy is coming. In which you can check the information about the envoy. 
 
-- If you try to access `http://localhost:8899/` in browser then you will be redirected to the `Google.com`
+- If you try to access `http://localhost:8899/` in browser then you will be redirected to the `www.google.com`
 
 
 
