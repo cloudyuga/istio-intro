@@ -158,3 +158,4 @@ All our traffic to come to envoy sidecar then then routed to our http-echo serve
 
 - Open browser and try to access the http://<public-ip>:31009 your request will forwarded to `echo` application and if you try to access the http://<public-ip>:31010 your request will forwarded to `envoy admin configuration`.
 
+![](envoy101.png)
