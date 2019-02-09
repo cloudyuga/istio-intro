@@ -1,0 +1,34 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: backend-vsvc
+spec:
+  hosts:
+  - backend-svc.default.svc.cluster.local
+  http:
+  - match:
+    - uri:
+        exact: "/e2"
+    route:
+    - destination:
+        host: backend-svc.default.svc.cluster.local
+        subset: v2
+  - route:
+    - destination:
+        host: backend-svc.default.svc.cluster.local
+        subset: v1
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: backend-svc
+spec:
+  host: backend-svc.default.svc.cluster.local
+  subsets:
+  - name: v1
+    labels:
+      version: "v1"
+  - name: v2
+    labels:
+      version: "v2"
+---

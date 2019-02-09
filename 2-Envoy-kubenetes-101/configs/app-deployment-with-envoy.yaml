@@ -4,7 +4,6 @@ metadata:
   labels:
     app: flask-app
   name: k8s-envoy-101
-  namespace: default
 spec:
   replicas: 1
   selector:
@@ -22,7 +21,10 @@ spec:
             name: envoy-config
       containers:
         - name: http-echo
-          args: ["-listen", ":9090", "-text", "Hello from main app"]
+          args: ["-listen", ":9090", "-text", "Hello from 9090"]
+          image: hashicorp/http-echo:0.2.3
+        - name: http-echo-2
+          args: ["-listen", ":9091", "-text", "Hello from 9091 "]
           image: hashicorp/http-echo:0.2.3
         - name: envoy-sidecar
           image: envoyproxy/envoy-alpine:v1.8.0

@@ -36,7 +36,7 @@ data:
                 name: local_app_route
                 virtual_hosts:
                 - name: local_app
-                  domains: ["*"]
+                  domains: ["demo.com"]
                   routes:
                   - match: { prefix: "/" }
                     route: { cluster: local }
@@ -100,7 +100,10 @@ spec:
             name: envoy-config
       containers:
         - name: http-echo
-          args: ["-listen", ":9090", "-text", "Hello from main app"]
+          args: ["-listen", ":9090", "-text", "Hello from 9090"]
+          image: hashicorp/http-echo:0.2.3
+        - name: http-echo2
+          args: ["-listen", ":9091", "-text", "Hello from 9091"]
           image: hashicorp/http-echo:0.2.3
         - name: envoy-sidecar
           image: envoyproxy/envoy-alpine:v1.8.0

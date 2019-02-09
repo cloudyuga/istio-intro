@@ -30,12 +30,14 @@ data:
                 - name: local_app
                   domains: ["*"]
                   routes:
-                  - match: { prefix: "/" }
-                    route: { cluster: local }
+                  - match: { prefix: "/9090" }
+                    route: { cluster: c9090 }
+                  - match: { prefix: "/9091" }
+                    route: { cluster: c9091 }
               http_filters:
               - name: envoy.router
       clusters:
-      - name: local
+      - name: c9090
         type: STATIC
         connect_timeout: 10s
         lb_policy: ROUND_ROBIN
@@ -43,4 +45,13 @@ data:
         - socket_address:
             address: 127.0.0.1
             port_value: 9090
+            protocol: TCP
+      - name: c9091
+        type: STATIC
+        connect_timeout: 10s
+        lb_policy: ROUND_ROBIN
+        hosts:
+        - socket_address:
+            address: 127.0.0.1
+            port_value: 9091
             protocol: TCP
