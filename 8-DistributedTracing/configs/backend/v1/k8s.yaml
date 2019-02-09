@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-v1
+  labels:
+    app: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+      version: "v1"
+  template:
+    metadata:
+      labels:
+        app: backend
+        version: "v1"
+    spec:
+      containers:
+        - name: flask-backend-app
+          image: teamcloudyuga/istio-flask-backend:v0.1
+          ports:
+            - containerPort: 9090
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-svc
+  labels:
+    app: backend
+spec:
+  selector:
+    app: backend
+  ports:
+  - name: http-backend
+    port: 80
+    targetPort: 9090
+

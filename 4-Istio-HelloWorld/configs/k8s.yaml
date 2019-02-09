@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo-app-1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: echo-app
+      version: v1
+  template:
+    metadata:
+      name: echo-app
+      labels:
+        app: echo-app
+        version: v1
+    spec:
+      containers:
+        - name: http-echo
+          args: ["-listen", ":9090", "-text", "Hello from v1 echo"]
+          image: hashicorp/http-echo:0.2.3
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo-app-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: echo-app
+      version: v2
+  template:
+    metadata:
+      name: echo-app
+      labels:
+        app: echo-app
+        version: v2
+    spec:
+      containers:
+        - name: http-echo
+          args: ["-listen", ":9090", "-text", "Hello from v2 echo"]
+          image: hashicorp/http-echo:0.2.3
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: echo-svc
+  labels:
+    app: echo-app
+spec:
+  selector:
+    app: echo-app
+  ports:
+  - name: http
+    port: 9090

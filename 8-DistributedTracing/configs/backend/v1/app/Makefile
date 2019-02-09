@@ -1,13 +1,13 @@
-IMAGE = "envoy-course-101"
+IMAGE = "teamcloudyuga/istio-flask-backend"
 TAG = "v0.1"
-CONTAINER = "envoy-course-101-container"
-APP_PORT = 9877
-# APP_PORT = 9876
-HOST_PORT = 9001
+CONTAINER = "istio-flask-backend1"
 
 
 build:
 	docker build -t $(IMAGE):$(TAG) .
+
+build-push: build
+	docker push $(IMAGE):$(TAG)
 
 clean:
 	docker stop $(CONTAINER)
@@ -20,5 +20,6 @@ logs:
 	docker logs $(CONTAINER)
 
 run:
-	docker run -p $(HOST_PORT):$(APP_PORT) --name $(CONTAINER) $(IMAGE):$(TAG)
+	docker run -p 9999:9090 --name $(CONTAINER) -d $(IMAGE):$(TAG)
+
 
